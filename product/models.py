@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
+
 from taggit.managers import TaggableManager
 
 # Create your models here.
@@ -12,30 +14,36 @@ FLAG_TYPES = (
  )
 
 class Product(models.Model):
-    name = models.CharField(max_length=100)
-    flag = models.CharField(max_length=10, choices=FLAG_TYPES)
-    Image = models.ImageField(upload_to='products')
-    price = models.IntegerField()
-    sku = models.CharField(max_length=12)
-    subtitle = models.CharField(max_length=300)
-    description = models.TextField(max_length=4000)
-    quantity = models.IntegerField()
-    brand = models.ForeignKey('Brand', related_name='product_brand', on_delete=models.CASCADE)
-    tags = TaggableManager()
-    review = models.ForeignKey('Review', related_name='product_review', on_delete=models.CASCADE)
+    name = models.CharField(_('Name'), max_length=100)
+    flag = models.CharField(_('Falge'), max_length=10, choices=FLAG_TYPES)
+    Image = models.ImageField(_('Image'), upload_to='products')
+    price = models.IntegerField(_('Price'), )
+    sku = models.CharField(_('Sku'), max_length=12)
+    subtitle = models.CharField(_('Subtitle'), max_length=300)
+    description = models.TextField(_('Description'), max_length=4000)
+    quantity = models.IntegerField(_('Quantity'))
+    brand = models.ForeignKey('Brand',verbose_name=('Brand'), related_name='product_brand', on_delete=models.CASCADE)
+    tags = TaggableManager(_('Tags'))
+
+    def __str__(self) -> str:
+        return self.name
 
 
 
 
-class Images(models.Model):
-    # product = models.ForeignKey(Product, )
-    pass
+class ProductImages(models.Model):
+    product = models.ForeignKey(Product, verbose_name=('Product Images'), related_name='product_image', on_delete=models.CASCADE)
+    images = models.ImageField(_('Images'), upload_to='product_images')
+
+    def __str__(self) -> str:
+        return str(self.product)
+    
 
 
 
 class Brand(models.Model):
-    name = models.CharField(max_length=100)
-    Image = models.ImageField(upload_to='brand')
+    name = models.CharField(_('Name'), max_length=100)
+    image = models.ImageField(_('Image'), upload_to='brand') 
 
     def __str__(self) -> str:
         return self.name
@@ -43,9 +51,11 @@ class Brand(models.Model):
 
 
 class Review(models.Model):
-    user = models.ForeignKey(User, related_name='review_auther', on_delete=models.SET_NULL, null=True)
-    product = models.ForeignKey(Product, related_name='review_product', on_delete=models.CASCADE)
-    rate = models.IntegerField()
-    review = models.TextField(max_length=3000)
-    create_at = models.DateTimeField(default=timezone.now)
+    user = models.ForeignKey(User, verbose_name=('User'),  related_name='review_auther', on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, verbose_name=('Product'), related_name='review_product', on_delete=models.CASCADE)
+    rate = models.IntegerField(_('Rate'))
+    review = models.TextField(_('Review'), max_length=3000)
+    create_at = models.DateTimeField(_('Create At'), default=timezone.now)
     
+    def __str__(self) -> str:
+        return self.name
