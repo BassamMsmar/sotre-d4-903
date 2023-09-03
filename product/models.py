@@ -59,7 +59,7 @@ class Brand(models.Model):
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
-        super(ProBrandduct, self).save(*args, **kwargs)
+        super(Brand, self).save(*args, **kwargs)
 
 
 
