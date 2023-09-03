@@ -14,8 +14,14 @@ class ProductDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        reviews = Review.objects.filter(product=self.get_object())
-        context["reviews"] = reviews
-        print(reviews)
-        print('000000000000000000000000000')
+        context["reviews"] = Review.objects.filter(product=self.get_object())
         return context
+
+
+
+class BrandList(ListView):
+    model = Brand    #context : object_list, model_list
+
+
+class BrandDetails(DetailView):
+    model = Product
