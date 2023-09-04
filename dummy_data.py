@@ -18,7 +18,7 @@ def seed_brand(n):
             name = fake.name(),
             image = f'brand/{images[random.randint(0,4)]}'
         )
-    print(f'Seed {n},Brand Successfully')
+    print(f'Seed {n} Brand Successfully')
 
 
 def seed_product(n):
@@ -41,15 +41,18 @@ def seed_product(n):
 
 
         )
-    print(f'Seed  {n}, Product Successfully')
+    print(f'Seed  {n} Product Successfully')
 
 
 
+def create_fake_date():
+    answer = input('If you want create 150 brand and 2000 products press "y" or any kay to exit :  ')
+    if answer == 'y':
+        seed_brand(150)
+        seed_product(2000)
+    else :
+        print('Exit....')
 
 
-
-
-
-
-seed_product(2000)
+create_fake_date()
             

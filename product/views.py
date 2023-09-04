@@ -28,7 +28,11 @@ class BrandDetails(ListView):
     template_name = 'product/brand_details.html'
 
     def get_queryset(self):
+
+        # Get the brand based on the slug from the URL kwargs
         brand = Brand.objects.get(slug=self.kwargs['slug'])
+
+        # Filter the queryset to include only entries with the specified brand
         return super().get_queryset().filter(brand=brand)
     
 
