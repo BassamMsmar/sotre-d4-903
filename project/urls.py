@@ -17,13 +17,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from django.shortcuts import render
+
 from django.conf.urls.static import static
 
+
+def home(request):
+    return render(request, 'home.html')
+
 urlpatterns = [
+    path('', home, name='home'),
+
     path('admin/', admin.site.urls),
     path('products/', include('product.urls')),
 
-        path("__debug__/", include("debug_toolbar.urls")),
+    path("__debug__/", include("debug_toolbar.urls")),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
