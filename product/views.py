@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.db.models import Q , F, Value
-from django.db.models.aggregates import Max, Min, Sum, Avg
+from django.db.models.aggregates import Max, Min, Sum, Avg, Count
 from .models import Product, Review, Brand
 
 
@@ -26,6 +26,10 @@ class ProductDetail(DetailView):
 
 class BrandList(ListView):
     model = Brand    #context : object_list, model_list
+    queryset = Brand.objects.annotate(product_count=Count('product_brand'))
+
+
+
 
 
 class BrandDetails(ListView):
@@ -43,7 +47,7 @@ class BrandDetails(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["brand"] = Brand.objects.get(slug=self.kwargs['slug'])
+        context["brand"] = Brand.objects.filter(slug=self.kwargs['slug']).annotate(product_count=Count('product_brand'))[0]
         return context
     
     
