@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
+from django.db.models.aggregates import Avg, Aggregate, Count
 
 from taggit.managers import TaggableManager
 
@@ -28,9 +29,27 @@ class Product(models.Model):
     tags = TaggableManager(_('Tags'))
     slug = models.SlugField(null=True, blank=True)
 
-    def __str__(self) -> str:
-        return self.name
+
+    # instance method 
+    def avg_rate(self):
+        avg = self.review_product.aggregate(rate_avg=Avg('rate'))
+        if not avg['rate_avg']:
+            result = 0
+            return result
+        return avg['rate_avg']
     
+    def count_reviews(self):
+        """
+        Get the count of reviews for the product.
+        
+        Returns:
+            int: The count of reviews for the product.
+        """
+        return self.review_product.count()
+
+    def __str__(self) -> str:
+            return self.name
+        
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Product, self).save(*args, **kwargs)
