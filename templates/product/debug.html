@@ -61,9 +61,12 @@
     <h1>Debug Test product</h1>
     <a href="/">Home</a>
 
+    <h4>{{ date }}</h4>
+    
+
     <ul >
         {% for item in date %}
-        <li>{{item}}</li>
+        <li>{{ item }} - {{ item.price }} </li>
         {% endfor %}
     </ul>
 </body>
@@ -72,7 +75,7 @@
 
 <!--=====================================
                     JS LINK PART START
-        =======================================-->
+=======================================-->
 <!-- VENDOR -->
 <script src="{% static 'en/vendor/bootstrap/jquery-1.12.4.min.js' %}"></script>
 <script src="{% static 'en/vendor/bootstrap/popper.min.js' %}"></script>
@@ -90,7 +93,7 @@
 <script src="{% static 'en/js/slick.js' %}"></script>
 <script src="{% static 'en/js/main.js' %}"></script>
 <!--=====================================
-                    JS LINK PART END
-        =======================================-->
+          JS LINK PART END
+=======================================-->
 
 </html>
