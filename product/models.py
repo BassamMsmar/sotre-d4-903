@@ -20,7 +20,7 @@ class Product(models.Model):
     name = models.CharField(_('Name'), max_length=100)
     flag = models.CharField(_('Falge'), max_length=10, choices=FLAG_TYPES)
     image = models.ImageField(_('Image'), upload_to='products/')
-    price = models.IntegerField(_('Price'), )
+    price = models.IntegerField(_('Price'))
     sku = models.CharField(_('Sku'), max_length=12)
     subtitle = models.CharField(_('Subtitle'), max_length=300)
     description = models.TextField(_('Description'), max_length=4000)

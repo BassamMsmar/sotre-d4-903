@@ -40,10 +40,16 @@ INSTALLED_APPS = [
 
     'taggit',
     "debug_toolbar",
+    'rest_framework',
 
     'product',
     'settings',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 30
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -73,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'settings.company_context_processor.get_company_date',
             ],
         },
     },
