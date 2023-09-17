@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.db.models.aggregates import Avg, Aggregate, Count
 
-from .models import Product, Brand
+from .models import Product, Brand, Review
 
 
 
@@ -31,10 +31,16 @@ class PorductListSerializers(serializers.ModelSerializer):
         return product.price * 1.15
 
 
+class ReviewSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = '__all__'
 
 class PorductDetailSerializers(serializers.ModelSerializer):
+    reviews = ReviewSerializers(source='review_product',many=True)
     avg_rate = serializers.SerializerMethodField()
     review_count = serializers.SerializerMethodField()
+
 
     class Meta:
         model = Product
