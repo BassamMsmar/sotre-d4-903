@@ -5,6 +5,7 @@ from rest_framework import filters
 
 from rest_framework import generics
 from .my_filter import PorductFilter
+from .my_pagination import MyPagination
 from .serializers import PorductListSerializers, PorductDetailSerializers, BrandListSerializers, BrandDetailSerializers
 from .models import Product, Brand
 
@@ -30,6 +31,7 @@ class ProductListApi(generics.ListCreateAPIView):
     search_fields = ['name', 'price']
     ordering_fields = ['name', 'price']
     filterset_class = PorductFilter
+    pagination_class = MyPagination
 
 
 class ProductDetailApi(generics.RetrieveUpdateDestroyAPIView):
