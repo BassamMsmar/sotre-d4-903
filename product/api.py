@@ -4,7 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 
 from rest_framework import generics
-
+from .my_filter import PorductFilter
 from .serializers import PorductListSerializers, PorductDetailSerializers, BrandListSerializers, BrandDetailSerializers
 from .models import Product, Brand
 
@@ -29,6 +29,7 @@ class ProductListApi(generics.ListCreateAPIView):
     filterset_fields = ['name', 'price','brand']
     search_fields = ['name', 'price']
     ordering_fields = ['name', 'price']
+    filterset_class = PorductFilter
 
 
 class ProductDetailApi(generics.RetrieveUpdateDestroyAPIView):
