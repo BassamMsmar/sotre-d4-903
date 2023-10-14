@@ -23,3 +23,17 @@ prodect :
 - descriptions
 - related items
 - quantity
+
+--------------
+card :
+- user
+- staus
+- create date
+- delevery date
+- descond
+- products:
+    - name
+    - price
+    - brand
+    - image
+
